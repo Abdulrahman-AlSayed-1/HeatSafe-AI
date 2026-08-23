@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: dev
+  
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    com.heatsafe: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

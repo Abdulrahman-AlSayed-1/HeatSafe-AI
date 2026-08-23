@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: heatsafe-postgres
+    environment:
+      POSTGRES_DB: heatsafe
+      POSTGRES_USER: heatsafe
+      POSTGRES_PASSWORD: heatsafe
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U heatsafe"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: heatsafe-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DATABASE_URL: jdbc:postgresql://postgres:5432/heatsafe
+      DATABASE_USERNAME: heatsafe
+      DATABASE_PASSWORD: heatsafe
+      FORTYGUARD_API_KEY: ${FORTYGUARD_API_KEY}
+      FORTYGUARD_BASE_URL: ${FORTYGUARD_BASE_URL:-https://api.fortyguard.com}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      AI_MODEL: ${AI_MODEL:-gpt-4o}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./backend/src:/app/src
+
+volumes:
+  postgres-data:
