@@ -5,7 +5,7 @@
 
 ---
 
-## 🌟 Executive Overview
+## Executive Overview
 
 **HeatSafe AI** is an operational heat-risk decision-support and mitigation system designed for industrial facilities, open-air construction sites, logistics hubs, and infrastructure projects. By integrating **FortyGuard high-resolution satellite microclimate telemetry (TCM)** with **ISO 7243 physiological heat strain standards** and **OSHA occupational safety protocols**, HeatSafe AI transforms raw thermal rasters into actionable, task-tailored workforce protection schedules.
 
@@ -33,37 +33,37 @@
 
 ---
 
-## 🚀 Key Platform Features
+## Key Platform Features
 
 ### 1. High-Resolution FortyGuard Microclimate Telemetry
-- **Dynamic AOI Generation**: Automatically calculates $0.01^\circ \times 0.01^\circ$ geographic bounding polygons from worksite GPS coordinates.
+- **Dynamic AOI Generation**: Automatically calculates 0.01° × 0.01° geographic bounding polygons from worksite GPS coordinates.
 - **Asynchronous Raster Polling**: Submits TCM heatmap jobs to the FortyGuard tOS API (`/v1/heatmap`), polls activity status with exponential backoff, and caches raster tiles.
 - **Telemetry Sync Coordination**: Background synchronization service coordinates real-time surface thermal observations across active enterprise facilities.
 
 ### 2. ISO 7243 & OSHA Physiological Risk Composite Engine
 - **Multi-Factor Hazard Modeling**: Combines ambient heat index, Wet Bulb Globe Temperature (WBGT), Discomfort Index (DI), and direct solar radiation.
 - **Task Metabolic Risk Calculation**: Evaluates task physical intensity (Light, Moderate, Heavy, Very Heavy), environmental exposure category (Indoor, Low, Moderate, High), continuous duration, and crew headcount.
-- **Diurnal Thermal Curve**: Models 24-hour diurnal heat curves with peak solar hazard windows ($12:00\text{--}17:00$) and off-peak recovery horizons.
+- **Diurnal Thermal Curve**: Models 24-hour diurnal heat curves with peak solar hazard windows (12:00–17:00) and off-peak recovery horizons.
 
 ### 3. Interactive What-If Scenario Simulator
 - **4 Operational Mitigation Levers**:
   1. **Shift Time Window**: Shift start time sliders and fast diurnal presets (Early Morning, Morning, Late Afternoon, Night).
   2. **Continuous Exposure Duration**: Adjust duration from 30 to 360 minutes with instant strain re-evaluations.
-  3. **Work-Rest Cycles**: Enforce OSHA / ISO 7243 work-rest rotations ($45\text{m}/15\text{m}$, $30\text{m}/30\text{m}$, $15\text{m}/45\text{m}$, or Stoppage).
+  3. **Work-Rest Cycles**: Enforce OSHA / ISO 7243 work-rest rotations (45m/15m, 30m/30m, 15m/45m, or Stoppage).
   4. **Engineering Controls**: Pre-stage cooling stations, active misting fans, evaporative PPE, and hydration monitors.
 - **Live Commit Pipeline**: 1-click application applies simulated mitigation parameters directly to active production schedules, recalculating worksite risk in real time.
-- **Pre-Shift Staging Guard**: Automatically locks schedule commits for shifts scheduled $>12\text{h}$ in advance, staging parameters until verified FortyGuard satellite observations unlock at $T-12\text{h}$.
+- **Pre-Shift Staging Guard**: Automatically locks schedule commits for shifts scheduled >12h in advance, staging parameters until verified FortyGuard satellite observations unlock at T-12h.
 
 ### 4. Enterprise Decision Cockpit & UI System
 - **Thermal Horizon Radial Gauge**: Sleek 220° radial instrument panel with dynamic severity color mapping, status pills, and localized microclimate metrics.
-- **4-Phase Segmented Diurnal Tracker**: Replaces cluttered timeline bars with discrete, intuitive diurnal shift blocks (`Dawn 00-06h`, `Morning 06-12h`, `Midday Peak 12-17h`, `Evening 17-24h`).
-- **Dual-Level AI Recommendations**: Site-wide OSHA operational advisories alongside task-tailored mitigations featuring 1-click **Simulate in What-If** routing.
+- **4-Phase Segmented Diurnal Tracker**: Replaces cluttered timeline bars with discrete, intuitive diurnal shift blocks (Dawn 00-06h, Morning 06-12h, Midday Peak 12-17h, Evening 17-24h).
+- **Dual-Level AI Recommendations**: Site-wide OSHA operational advisories alongside task-tailored mitigations featuring 1-click Simulate in What-If routing.
 - **Executive Plan Export**: Client-side high-resolution PDF generation with branded headers, facility metrics, and task rosters.
 - **Full Mobile Responsiveness**: Seamless experience across mobile, tablet, and widescreen industrial displays.
 
 ---
 
-## 🏗️ System Architecture & Technology Stack
+## System Architecture & Technology Stack
 
 ```
 HeatSafe-AI/
@@ -92,7 +92,7 @@ HeatSafe-AI/
 └── README.md
 ```
 
-### Technology Highlights:
+### Technology Details:
 - **Backend**: Java 17, Spring Boot 3.2.0, Spring Data JPA, Hibernate, Flyway Migration, RestTemplate.
 - **Frontend**: React 18, TypeScript, Vite 5, Tailwind CSS, Lucide React, Recharts, `html2canvas`, `jspdf`.
 - **Database**: PostgreSQL 15 with spatial coordinates support.
@@ -100,7 +100,7 @@ HeatSafe-AI/
 
 ---
 
-## 📋 Complete REST API Reference
+## Complete REST API Reference
 
 ### 1. Worksites
 | Method | Endpoint | Description |
@@ -141,7 +141,7 @@ HeatSafe-AI/
 
 ---
 
-## ⚡ Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites
 - **Java 17+** & **Maven 3.9+**
@@ -206,11 +206,11 @@ npm run dev
 
 ---
 
-## ⚙️ Environment Configuration
+## Environment Configuration
 
 | Variable | Description | Default / Example | Required |
 |---|---|---|:---:|
-| `FORTYGUARD_API_KEY` | FortyGuard tOS Enterprise API Key | `fg_live_...` | **Yes** |
+| `FORTYGUARD_API_KEY` | FortyGuard tOS Enterprise API Key | `fg_live_...` | Yes |
 | `FORTYGUARD_BASE_URL` | FortyGuard API Base URL | `https://api.fortyguard.com` | No |
 | `DATABASE_URL` | PostgreSQL JDBC Connection String | `jdbc:postgresql://localhost:5432/heatsafe` | No |
 | `DATABASE_USERNAME` | PostgreSQL User | `heatsafe` | No |
@@ -220,7 +220,7 @@ npm run dev
 
 ---
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
 ```bash
 # Run backend test suite (unit + integration tests)
@@ -234,6 +234,6 @@ npm run build
 
 ---
 
-## 📄 License
+## License
 
 Developed for the **FortyGuard Hackathon '26** under the **Industrial & Enterprise Track**. All rights reserved.
