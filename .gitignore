@@ -81,6 +81,8 @@ bin/
 # OS
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
 
 # Node / Frontend
 frontend/node_modules/

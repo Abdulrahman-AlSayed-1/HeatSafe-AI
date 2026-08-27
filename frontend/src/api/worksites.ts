@@ -16,4 +16,5 @@ export const worksitesApi = {
   get: (id: number) => api.get<Worksite>(`/worksites/${id}`),
   create: (data: Omit<Worksite, 'id' | 'createdAt' | 'updatedAt'>) =>
     api.post<Worksite>('/worksites', data),
+  delete: (id: number) => api.delete(`/worksites/${id}`),
 };

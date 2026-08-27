@@ -1,6 +1,5 @@
 package com.heatsafe.domain.risk;
 
-import com.heatsafe.domain.task.Task;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +17,8 @@ public class HeatRiskAssessment {
     private List<CriticalWindow> criticalWindows = new ArrayList<>();
     @Builder.Default
     private List<AffectedTask> affectedTasks = new ArrayList<>();
+    @Builder.Default
+    private List<String> reasons = new ArrayList<>();
     private LocalDateTime assessedAt;
     
     @Getter
@@ -41,7 +42,10 @@ public class HeatRiskAssessment {
         private String taskName;
         private LocalDateTime taskStart;
         private LocalDateTime taskEnd;
+        private Integer workerCount;
+        private ForecastStatus forecastStatus;
         private RiskLevel riskLevel;
+        private Double riskScore;
         private String reason;
     }
     
@@ -49,6 +53,14 @@ public class HeatRiskAssessment {
         LOW,
         MODERATE,
         HIGH,
-        EXTREME
+        EXTREME,
+        PENDING_FORECAST,
+        UNSUPPORTED
+    }
+
+    public enum ForecastStatus {
+        HISTORICAL,          // Past task: historical FortyGuard satellite data available
+        FORECASTABLE,        // Within now to now + 12h: live FortyGuard forecast available
+        AWAITING_FORECAST    // > 12h in future: FortyGuard forecast unlocks within 12h of shift
     }
 }

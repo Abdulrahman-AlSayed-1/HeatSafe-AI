@@ -23,11 +23,11 @@ spring:
   
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:}
-      base-url: ${OPENAI_BASE_URL:}
+      api-key: ${OPENAI_API_KEY:ollama}
+      base-url: ${OPENAI_BASE_URL:http://127.0.0.1:11434}
       chat:
         options:
-          model: ${AI_MODEL:gpt-4o}
+          model: ${AI_MODEL:llama3.1}
 
 server:
   port: ${SERVER_PORT:8080}

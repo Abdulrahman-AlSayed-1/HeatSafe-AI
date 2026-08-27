@@ -31,10 +31,24 @@ public class Task {
     
     @Column(nullable = false)
     private Integer durationMinutes;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer workerCount = 1;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ExposureType exposureType;
+
+    @Column(name = "work_rest_ratio")
+    @Builder.Default
+    private String workRestRatio = "CONTINUOUS";
+
+    @Column(name = "cooling_measures")
+    private String coolingMeasures;
+
+    @Column(name = "mitigation_notes")
+    private String mitigationNotes;
     
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -44,12 +58,24 @@ public class Task {
     
     @PrePersist
     protected void onCreate() {
+        if (workerCount == null || workerCount < 1) {
+            workerCount = 1;
+        }
+        if (workRestRatio == null || workRestRatio.trim().isEmpty()) {
+            workRestRatio = "CONTINUOUS";
+        }
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
     
     @PreUpdate
     protected void onUpdate() {
+        if (workerCount == null || workerCount < 1) {
+            workerCount = 1;
+        }
+        if (workRestRatio == null || workRestRatio.trim().isEmpty()) {
+            workRestRatio = "CONTINUOUS";
+        }
         updatedAt = LocalDateTime.now();
     }
     

@@ -31,4 +31,10 @@ public class WorksiteController {
     public ResponseEntity<WorksiteDTO> getWorksite(@PathVariable Long id) {
         return ResponseEntity.ok(worksiteService.getWorksite(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteWorksite(@PathVariable Long id) {
+        worksiteService.deleteWorksite(id);
+        return ResponseEntity.noContent().build();
+    }
 }

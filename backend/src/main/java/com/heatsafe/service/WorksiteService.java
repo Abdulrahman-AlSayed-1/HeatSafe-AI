@@ -8,4 +8,5 @@ public interface WorksiteService {
     List<WorksiteDTO> getAllWorksites();
     WorksiteDTO getWorksite(Long id);
     WorksiteDTO createWorksite(WorksiteDTO dto);
+    void deleteWorksite(Long id);
 }

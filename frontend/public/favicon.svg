@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <!-- Cooling Cyan/Azure Arc Gradient -->
+    <linearGradient id="coolArc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+
+    <!-- Thermal Amber/Coral Arc Gradient -->
+    <linearGradient id="heatArc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBBF24" />
+      <stop offset="50%" stop-color="#F97316" />
+      <stop offset="100%" stop-color="#EF4444" />
+    </linearGradient>
+
+    <!-- AI Spark Glow Gradient -->
+    <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="50%" stop-color="#93C5FD" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Modern Deep Navy Squircle Base -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#0F172A" />
+  <rect x="2" y="2" width="60" height="60" rx="16" stroke="#334155" stroke-width="1.2" stroke-opacity="0.6" />
+
+  <!-- Left Cooling & Safety Arc (Azure to Indigo) -->
+  <path
+    d="M32 11 C20 11 13 19 13 31 C13 42.5 22 49.5 32 53"
+    stroke="url(#coolArc)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <!-- Right Thermal & Heat Awareness Arc (Amber to Flame Coral) -->
+  <path
+    d="M32 11 C44 11 51 19 51 31 C51 42.5 42 49.5 32 53"
+    stroke="url(#heatArc)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <!-- Apex Connection Node -->
+  <circle cx="32" cy="11" r="3.2" fill="#FFFFFF" />
+
+  <!-- Center AI Intelligence Star / Spark -->
+  <path
+    d="M32 23 Q32 31 24.5 31 Q32 31 32 39 Q32 31 39.5 31 Q32 31 32 23 Z"
+    fill="#FFFFFF"
+  />
+  <circle cx="32" cy="31" r="6" fill="url(#sparkGlow)" opacity="0.75" />
+</svg>
