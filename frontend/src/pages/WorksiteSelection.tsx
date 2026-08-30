@@ -46,7 +46,7 @@ export default function WorksiteSelection() {
     setLoading(true);
     try {
       const response = await worksitesApi.getAll();
-      const list = response.data || [];
+      const list = Array.isArray(response.data) ? response.data : [];
       setWorksites(list);
 
       // Initialize loading stats placeholders
@@ -75,7 +75,7 @@ export default function WorksiteSelection() {
 
           const riskData = riskRes.status === 'fulfilled' ? riskRes.value.data : null;
           const thermalData = thermalRes.status === 'fulfilled' ? thermalRes.value.data : null;
-          const tasksData = tasksRes.status === 'fulfilled' ? tasksRes.value.data : [];
+          const tasksData = tasksRes.status === 'fulfilled' && Array.isArray(tasksRes.value.data) ? tasksRes.value.data : [];
 
           let level: WorksiteLiveStats['riskLevel'] = 'SAFE';
           if (riskData?.riskLevel) {

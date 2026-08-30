@@ -164,9 +164,10 @@ export default function Dashboard() {
 
     try {
       const taskRes = await tasksApi.getAll(id);
-      setApiTasks(taskRes.data);
+      setApiTasks(Array.isArray(taskRes.data) ? taskRes.data : []);
     } catch (err) {
       console.error('Failed to load tasks:', err);
+      setApiTasks([]);
     }
 
     // 2. Fetch FortyGuard Telemetry Layers
@@ -209,7 +210,7 @@ export default function Dashboard() {
 
     try {
       const recRes = await recommendationsApi.getAll(id);
-      setRecommendations(recRes.data || []);
+      setRecommendations(Array.isArray(recRes.data) ? recRes.data : []);
     } catch (err: any) {
       console.warn('Recommendations endpoint:', err);
       setRecommendations([]);
