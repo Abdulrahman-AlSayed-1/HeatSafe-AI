@@ -234,7 +234,7 @@ export default function WorksiteSelection() {
                 <span className="font-bold text-slate-900">{worksites.length}</span>
               </div>
               <div className="px-3.5 py-2 bg-red-50 rounded-xl border border-red-200 text-xs flex items-center justify-center gap-1.5 text-center whitespace-nowrap shadow-xs">
-                <span className="text-red-600 font-medium">High Heat Alerts:</span>
+                <span className="text-red-600 font-medium">High Risk Alerts:</span>
                 <span className="font-bold text-red-700">{highRiskCount}</span>
               </div>
               <div className="px-3.5 py-2 bg-blue-50 rounded-xl border border-blue-200 text-xs flex items-center justify-center gap-1.5 text-center whitespace-nowrap shadow-xs sm:col-span-2 lg:col-span-1">
@@ -428,7 +428,7 @@ export default function WorksiteSelection() {
                           </span>
                         </div>
 
-                        {/* Real Dynamic Heat Level Badge */}
+                        {/* Real Dynamic Workforce Risk Level Badge */}
                         <span
                           className={`px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider border shadow-sm ${getRiskBadgeStyles(
                             stats.riskLevel
@@ -438,7 +438,7 @@ export default function WorksiteSelection() {
                             ? 'CALCULATING'
                             : stats.riskLevel === 'UNSUPPORTED'
                             ? 'UNSUPPORTED'
-                            : `${stats.riskLevel} HEAT`}
+                            : `${stats.riskLevel} RISK`}
                         </span>
                       </div>
                     </div>
