@@ -30,7 +30,7 @@ spring:
           model: ${AI_MODEL:llama3.1}
 
 server:
-  port: ${SERVER_PORT:8080}
+  port: ${PORT:${SERVER_PORT:8080}}
   error:
     include-message: always
     include-binding-errors: always
