@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AlertTriangle, ChevronDown, ChevronUp, CheckCircle2 } from 'lucide-react';
+import { AlertTriangle, ChevronDown, ChevronUp, CheckCircle2, RefreshCw } from 'lucide-react';
 
 interface RiskReasonsProps {
   reasons: string[] | undefined;
@@ -11,25 +11,58 @@ export default function RiskReasons({ reasons, riskLevel }: RiskReasonsProps) {
 
   if (!reasons || reasons.length === 0) return null;
 
+  const isPending = riskLevel === 'PENDING' || riskLevel === 'CALCULATING';
   const isHighOrExtreme = riskLevel === 'HIGH' || riskLevel === 'EXTREME';
   const isModerate = riskLevel === 'MODERATE';
 
-  const badgeBg = isHighOrExtreme
-    ? 'bg-red-50 text-red-700 border-red-200'
-    : isModerate
-    ? 'bg-amber-50 text-amber-700 border-amber-200'
-    : 'bg-emerald-50 text-emerald-700 border-emerald-200';
+  const getReasonStyle = (reason: string) => {
+    if (isPending) {
+      return {
+        bg: 'bg-slate-50 text-slate-700 border-slate-200/80 animate-pulse',
+        Icon: RefreshCw,
+        iconColor: 'text-blue-500 animate-spin',
+      };
+    }
+    const lower = reason.toLowerCase();
+    if (lower.includes('extreme') || lower.includes('critical') || lower.includes('high') || isHighOrExtreme) {
+      return {
+        bg: 'bg-red-50 text-red-800 border-red-200',
+        Icon: AlertTriangle,
+        iconColor: 'text-red-500',
+      };
+    }
+    if (lower.includes('moderate') || lower.includes('elevated') || lower.includes('overlap') || isModerate) {
+      return {
+        bg: 'bg-amber-50 text-amber-800 border-amber-200',
+        Icon: AlertTriangle,
+        iconColor: 'text-amber-500',
+      };
+    }
+    return {
+      bg: 'bg-emerald-50 text-emerald-800 border-emerald-200',
+      Icon: CheckCircle2,
+      iconColor: 'text-emerald-500',
+    };
+  };
 
-  const iconColor = isHighOrExtreme ? 'text-red-500' : isModerate ? 'text-amber-500' : 'text-emerald-500';
+  const headerIconColor = isPending
+    ? 'text-blue-500 animate-spin'
+    : isHighOrExtreme
+    ? 'text-red-500'
+    : isModerate
+    ? 'text-amber-500'
+    : 'text-emerald-500';
+
+  const HeaderIcon = isPending ? RefreshCw : AlertTriangle;
 
   return (
-    <div className="mt-4 pt-4 border-t border-slate-200/80">
+    <div className="mt-2">
       <button
         onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between text-left group"
       >
         <div className="flex items-center gap-2">
-          <AlertTriangle className={`w-4 h-4 ${iconColor}`} />
+          <HeaderIcon className={`w-4 h-4 ${headerIconColor}`} />
           <span className="text-sm font-semibold text-slate-800 group-hover:text-slate-950 transition-colors">
             Risk Assessment Breakdown & Contributing Factors ({reasons.length})
           </span>
@@ -42,19 +75,19 @@ export default function RiskReasons({ reasons, riskLevel }: RiskReasonsProps) {
 
       {expanded && (
         <div className="mt-3 space-y-2">
-          {reasons.map((reason, idx) => (
-            <div
-              key={idx}
-              className={`p-3 rounded-xl border text-xs sm:text-sm font-medium flex items-start gap-2.5 transition-all ${badgeBg}`}
-            >
-              {isHighOrExtreme || isModerate ? (
-                <AlertTriangle className={`w-4 h-4 mt-0.5 flex-shrink-0 ${iconColor}`} />
-              ) : (
-                <CheckCircle2 className={`w-4 h-4 mt-0.5 flex-shrink-0 ${iconColor}`} />
-              )}
-              <span className="leading-relaxed">{reason}</span>
-            </div>
-          ))}
+          {reasons.map((reason, idx) => {
+            const style = getReasonStyle(reason);
+            const ItemIcon = style.Icon;
+            return (
+              <div
+                key={idx}
+                className={`p-3 rounded-xl border text-xs sm:text-sm font-medium flex items-start gap-2.5 transition-all ${style.bg}`}
+              >
+                <ItemIcon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${style.iconColor}`} />
+                <span className="leading-relaxed">{reason}</span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
