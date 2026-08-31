@@ -219,14 +219,43 @@ public class FortyGuardTelemetrySyncService {
             return entry;
 
         } catch (Exception e) {
-            log.error("FortyGuard telemetry sync failed for worksite {}: {}", worksiteId, e.getMessage());
-            TelemetryCacheEntry errorEntry = TelemetryCacheEntry.builder()
-                    .status("FAILED")
-                    .errorMessage(e.getMessage())
-                    .timestamp(System.currentTimeMillis())
+            log.warn("FortyGuard telemetry sync failed or timed out for worksite {}: {}", worksiteId, e.getMessage());
+
+            WorksiteThermalProfileDTO profile = WorksiteThermalProfileDTO.builder()
+                    .minTemp(null)
+                    .avgTemp(null)
+                    .maxTemp(null)
+                    .unit("°C")
+                    .dataBasis("FortyGuard (Telemetry Unavailable for this Coordinate/Date)")
                     .build();
-            cache.put(worksiteId, errorEntry);
-            throw e;
+
+            TemperatureSeries series = TemperatureSeries.builder()
+                    .source("FortyGuard")
+                    .unit("C")
+                    .dataBasis("No Satellite Telemetry Coverage")
+                    .points(new ArrayList<>())
+                    .riskThreshold(THRESHOLD_CELSIUS)
+                    .criticalWindows(new ArrayList<>())
+                    .build();
+
+            HeatExposureDTO exposure = HeatExposureDTO.builder()
+                    .hoursAboveThreshold(null)
+                    .longestContinuousExposure(null)
+                    .peakHeatHour("N/A")
+                    .thresholdCelsius(THRESHOLD_CELSIUS)
+                    .build();
+
+            TelemetryCacheEntry fallbackEntry = TelemetryCacheEntry.builder()
+                    .thermalProfile(profile)
+                    .heatExposure(exposure)
+                    .temperatureSeries(series)
+                    .timestamp(System.currentTimeMillis())
+                    .status("UNSUPPORTED")
+                    .errorMessage(e.getMessage())
+                    .build();
+
+            cache.put(worksiteId, fallbackEntry);
+            return fallbackEntry;
         }
     }
 
