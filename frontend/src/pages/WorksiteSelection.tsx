@@ -390,11 +390,11 @@ export default function WorksiteSelection() {
                           </p>
                         </div>
 
-                        {/* Real Hazard Index Card */}
+                        {/* Real Workforce Risk Card */}
                         <div className="bg-slate-50/80 rounded-xl p-3 border border-slate-100">
                           <div className="flex items-center gap-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                             <Shield className="w-3.5 h-3.5 text-indigo-500" />
-                            Hazard Index
+                            Workforce Risk
                           </div>
                           <p className="text-lg font-black text-slate-900 mt-0.5">
                             {stats.loading ? (

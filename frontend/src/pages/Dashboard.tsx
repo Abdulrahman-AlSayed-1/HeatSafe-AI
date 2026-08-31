@@ -531,9 +531,9 @@ export default function Dashboard() {
                     Thermal Intelligence Active
                   </span>
                 </div>
-                <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5 truncate">
-                  <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-                  <span>
+                <div className="flex items-center gap-2 mt-1 flex-wrap text-xs text-slate-500">
+                  <span className="flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5 flex-shrink-0 text-slate-400" />
                     {new Date().toLocaleDateString('en-US', {
                       weekday: 'short',
                       month: 'short',
@@ -541,8 +541,22 @@ export default function Dashboard() {
                       year: 'numeric',
                     })}
                   </span>
-                  {worksite?.timezone && <span> • Timezone: {worksite.timezone}</span>}
-                </p>
+                  {worksite?.timezone && <span>• {worksite.timezone}</span>}
+                  {/* Clear Workforce Exposure indicator */}
+                  {riskAssessment && (
+                    <span
+                      className={`inline-flex items-center gap-1 font-semibold px-2 py-0.5 rounded-md ${
+                        riskAssessment.affectedTasks && riskAssessment.affectedTasks.length > 0
+                          ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                          : 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                      }`}
+                    >
+                      {riskAssessment.affectedTasks && riskAssessment.affectedTasks.length > 0
+                        ? `⚠️ ${riskAssessment.affectedTasks.length} active shift(s) exposed to peak heat`
+                        : `✓ No active crews exposed to peak heat`}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-2 flex-wrap justify-between md:justify-end">
@@ -551,7 +565,7 @@ export default function Dashboard() {
                   riskLevel
                 )}`}
               >
-                {isAssessmentLoading ? 'CALCULATING' : riskLevel === 'UNSUPPORTED' ? 'UNSUPPORTED' : `${riskLevel} HEAT`}
+                {isAssessmentLoading ? 'CALCULATING' : riskLevel === 'UNSUPPORTED' ? 'UNSUPPORTED' : `${riskLevel} WORKFORCE RISK`}
               </div>
 
               {/* Header Quick Action: Export PDF */}

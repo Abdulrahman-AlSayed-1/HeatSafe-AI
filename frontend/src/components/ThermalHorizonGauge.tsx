@@ -59,7 +59,7 @@ export default function ThermalHorizonGauge({
     switch (lvl) {
       case 'EXTREME':
         return {
-          label: 'EXTREME THERMAL HAZARD',
+          label: 'EXTREME WORKFORCE STRAIN',
           glowColor: 'from-red-500/25 via-rose-500/20 to-amber-500/20',
           textColor: 'text-red-600',
           badgeBg: 'bg-red-100 text-red-800 border-red-300 ring-1 ring-red-400',
@@ -69,17 +69,17 @@ export default function ThermalHorizonGauge({
         };
       case 'HIGH':
         return {
-          label: 'HIGH THERMAL HAZARD',
+          label: 'HIGH WORKFORCE STRAIN',
           glowColor: 'from-orange-500/25 via-red-500/15 to-amber-500/20',
           textColor: 'text-orange-600',
           badgeBg: 'bg-orange-100 text-orange-800 border-orange-300 ring-1 ring-orange-400',
           Icon: Flame,
           iconColor: 'text-orange-600',
-          summary: 'Heavy physiological strain expected. Shift rescheduling and shaded hydration stations strongly advised',
+          summary: 'Active shifts overlap peak solar window. Shift rescheduling and shaded hydration stations strongly advised',
         };
       case 'MODERATE':
         return {
-          label: 'MODERATE HEAT STRESS',
+          label: 'MODERATE WORKFORCE STRAIN',
           glowColor: 'from-amber-500/20 to-yellow-500/15',
           textColor: 'text-amber-600',
           badgeBg: 'bg-amber-100 text-amber-800 border-amber-300',
@@ -89,13 +89,13 @@ export default function ThermalHorizonGauge({
         };
       default:
         return {
-          label: 'SAFE THERMAL HORIZON',
+          label: 'SAFE WORKFORCE STATUS',
           glowColor: 'from-emerald-500/20 to-teal-500/15',
           textColor: 'text-emerald-600',
           badgeBg: 'bg-emerald-100 text-emerald-800 border-emerald-300',
           Icon: ShieldCheck,
           iconColor: 'text-emerald-600',
-          summary: 'Surface thermal conditions are within safe operational physiological thresholds',
+          summary: 'No active workforce shifts in hazardous thermal windows. Operational conditions are safe',
         };
     }
   };
@@ -126,10 +126,10 @@ export default function ThermalHorizonGauge({
           </div>
           <div>
             <h2 className="text-lg font-bold text-slate-900 leading-tight">
-              Worksite Thermal Horizon & Hazard Composite
+              Workforce Operational Heat Risk Index
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
-              Engine: FortyGuard TCM Microclimate Model + ISO 7243 Physiological Strain Matrix
+              FortyGuard Satellite Telemetry &times; Active Shift Exposure &times; ISO 7243 Metabolic Strain
             </p>
           </div>
         </div>
