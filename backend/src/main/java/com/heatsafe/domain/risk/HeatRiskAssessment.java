@@ -59,7 +59,6 @@ public class HeatRiskAssessment {
     }
 
     public enum ForecastStatus {
-        HISTORICAL,          // Past task: historical FortyGuard satellite data available
         FORECASTABLE,        // Within now to now + 12h: live FortyGuard forecast available
         AWAITING_FORECAST    // > 12h in future: FortyGuard forecast unlocks within 12h of shift
     }

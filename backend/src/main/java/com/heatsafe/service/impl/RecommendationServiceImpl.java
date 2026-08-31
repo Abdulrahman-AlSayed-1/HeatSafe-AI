@@ -25,8 +25,8 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Value("${spring.ai.openai.base-url:http://127.0.0.1:11434}")
-    private String aiBaseUrl;
+    @Value("${spring.ai.openai.chat.endpoint:${spring.ai.openai.base-url:http://127.0.0.1:11434/v1}/chat/completions}")
+    private String aiEndpoint;
 
     @Value("${spring.ai.openai.api-key:ollama}")
     private String aiApiKey;
@@ -43,21 +43,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
         try {
             String prompt = buildPrompt(evidence);
-
-            String url;
-            if (aiBaseUrl.endsWith("/chat/completions")) {
-                url = aiBaseUrl;
-            } else if (aiBaseUrl.contains("generativelanguage.googleapis.com")) {
-                String clean = aiBaseUrl.replaceAll("/+$", "");
-                url = clean.endsWith("/openai") ? clean + "/chat/completions" : clean + "/openai/chat/completions";
-            } else {
-                String cleanBase = aiBaseUrl.replaceAll("/v1/?$", "").replaceAll("/+$", "");
-                if (cleanBase.contains("localhost")) {
-                    cleanBase = cleanBase.replace("localhost", "127.0.0.1");
-                }
-                url = cleanBase + "/v1/chat/completions";
-            }
-            log.info("Generating AI recommendations using model '{}' at URL: {}", aiModel, url);
+            log.info("Generating AI recommendations using model '{}' at endpoint: {}", aiModel, aiEndpoint);
 
             Map<String, Object> requestPayload = Map.of(
                     "model", aiModel,
@@ -78,7 +64,7 @@ public class RecommendationServiceImpl implements RecommendationService {
             );
 
             WebClient client = WebClient.builder()
-                    .baseUrl(url)
+                    .baseUrl(aiEndpoint)
                     .defaultHeader("Authorization", "Bearer " + aiApiKey)
                     .defaultHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                     .build();

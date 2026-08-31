@@ -24,8 +24,9 @@ spring:
   ai:
     openai:
       api-key: ${OPENAI_API_KEY:ollama}
-      base-url: ${OPENAI_BASE_URL:http://127.0.0.1:11434}
+      base-url: ${OPENAI_BASE_URL:http://127.0.0.1:11434/v1}
       chat:
+        endpoint: ${AI_ENDPOINT:${OPENAI_BASE_URL:http://127.0.0.1:11434/v1}/chat/completions}
         options:
           model: ${AI_MODEL:llama3.1}
 
