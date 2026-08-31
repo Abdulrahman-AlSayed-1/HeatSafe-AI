@@ -59,7 +59,7 @@ public class TaskMapper {
             return "HISTORICAL";
         }
         long minutesAhead = Duration.between(now, startTime).toMinutes();
-        if (minutesAhead <= 12 * 60) {
+        if (minutesAhead <= 24 * 60) {
             return "FORECASTABLE";
         }
         return "AWAITING_FORECAST";

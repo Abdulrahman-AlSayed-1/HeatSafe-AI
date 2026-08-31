@@ -80,11 +80,11 @@ export default function EditTask() {
         isInvalid: true,
       };
     }
-    if (diffHours <= 12) {
+    if (diffHours <= 24) {
       return {
         type: 'FORECAST_ACTIVE',
-        title: 'Live FortyGuard Forecast Active (+12h Window)',
-        message: 'Task is within the next 12 hours. Live satellite microclimate forecast telemetry will analyze this shift.',
+        title: 'Live FortyGuard Forecast Active (+24h Window)',
+        message: 'Task is within the next 24 hours. Live satellite microclimate forecast telemetry will analyze this shift.',
         buttonText: 'Update Task (Live Forecast Active)',
         bannerClass: 'bg-emerald-50/90 border-emerald-200 text-emerald-900',
         badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300',
@@ -95,8 +95,8 @@ export default function EditTask() {
     }
     return {
       type: 'AWAITING_FORECAST',
-      title: 'Scheduled Ahead (Forecast Unlocks at T-12h)',
-      message: 'Task scheduled beyond +12 hours. FortyGuard generates predictive microclimate forecasts within 12 hours of the shift. HeatSafe will automatically evaluate heat risk when the shift enters the 12h window.',
+      title: 'Scheduled Ahead (Forecast Unlocks at T-24h)',
+      message: 'Task scheduled beyond +24 hours. FortyGuard generates predictive microclimate forecasts within 24 hours of the shift. HeatSafe will automatically evaluate heat risk when the shift enters the 24h window.',
       buttonText: 'Save Scheduled Task',
       bannerClass: 'bg-amber-50/90 border-amber-200 text-amber-900',
       badgeClass: 'bg-amber-100 text-amber-800 border-amber-300',

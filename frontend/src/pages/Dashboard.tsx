@@ -749,7 +749,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          {/* Active Shift Tasks (Live FortyGuard Telemetry & ≤ 12h Forecast Window) */}
+          {/* Active Shift Tasks (Live FortyGuard Telemetry & ≤ 24h Forecast Window) */}
           <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 border border-slate-100">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
               <div className="flex items-center gap-3">
@@ -772,7 +772,7 @@ export default function Dashboard() {
                     )}
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Assessed against live FortyGuard satellite microclimate curves & individualized heat hazard scoring
+                    Assessed against live FortyGuard satellite microclimate curves &amp; individualized heat hazard scoring
                   </p>
                 </div>
               </div>
@@ -789,8 +789,8 @@ export default function Dashboard() {
             <TaskList
               tasks={activeForecastTasks}
               loading={loading || refreshing}
-              emptyTitle="No active shift tasks in the 12h forecast window"
-              emptyMessage="Tasks scheduled within the next 12 hours will automatically appear here with live satellite thermal risk analysis."
+              emptyTitle="No active shift tasks in the 24h forecast window"
+              emptyMessage="Tasks scheduled within the next 24 hours will automatically appear here with live satellite thermal risk analysis."
               onEdit={(task) => navigate(`/edit-task/${worksiteId}/${task.id}`)}
               onDelete={(taskId) => {
                 const target = apiTasks.find((t) => t.id === taskId);
@@ -823,7 +823,7 @@ export default function Dashboard() {
                     )}
                   </div>
                   <p className="text-xs text-slate-500 mt-0.5">
-                    Tasks scheduled &gt; 12 hours in advance. High-resolution FortyGuard satellite forecast unlocks automatically at T-12h.
+                    Tasks scheduled &gt; 24 hours in advance. High-resolution FortyGuard satellite forecast unlocks automatically at T-24h.
                   </p>
                 </div>
               </div>

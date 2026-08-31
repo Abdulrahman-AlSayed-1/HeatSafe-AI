@@ -128,8 +128,8 @@ public class HeatRiskServiceImpl implements HeatRiskService {
 
         for (Task task : tasks) {
             long minutesAhead = Duration.between(now, task.getStartTime()).toMinutes();
-            // Tasks scheduled beyond the +12h predictive forecast window cannot have live heat impacts assessed yet
-            if (minutesAhead > 12 * 60) {
+            // Tasks scheduled beyond the +24h predictive forecast window cannot have live heat impacts assessed yet
+            if (minutesAhead > 24 * 60) {
                 continue;
             }
 
@@ -240,12 +240,12 @@ public class HeatRiskServiceImpl implements HeatRiskService {
 
         LocalDateTime now = LocalDateTime.now();
         long minutesAhead = Duration.between(now, task.getStartTime()).toMinutes();
-        // Tasks scheduled beyond the +12h window cannot have predictive heat forecast assessed yet
-        if (minutesAhead > 12 * 60) {
+        // Tasks scheduled beyond the +24h window cannot have predictive heat forecast assessed yet
+        if (minutesAhead > 24 * 60) {
             return com.heatsafe.api.dto.TaskRiskEvaluationDTO.builder()
                     .riskLevel("AWAITING_FORECAST")
                     .riskScore(null)
-                    .riskReason("FortyGuard satellite forecast unlocks within 12 hours of shift")
+                    .riskReason("FortyGuard satellite forecast unlocks within 24 hours of shift")
                     .taskPeakTemp(null)
                     .build();
         }

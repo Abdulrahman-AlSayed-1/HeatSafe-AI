@@ -81,7 +81,7 @@ public class ScenarioServiceImpl implements ScenarioService {
                 task.setCoolingMeasures(originalCooling);
                 task.setMitigationNotes(originalNotes);
                 taskRepository.save(task);
-                throw new IllegalArgumentException("Cannot apply mitigation plan to task awaiting satellite forecast (>12h out). Modify schedule parameters via Task Update API instead.");
+                throw new IllegalArgumentException("Cannot apply mitigation plan to task awaiting satellite forecast (>24h out). Modify schedule parameters via Task Update API instead.");
             }
 
             // Commit proposed changes permanently
@@ -139,7 +139,7 @@ public class ScenarioServiceImpl implements ScenarioService {
                 || "AWAITING_FORECAST".equals(proposedTaskRisk.getRiskLevel())
                 || baselineTaskRisk.getRiskScore() == null
                 || proposedTaskRisk.getRiskScore() == null) {
-            sb.append("Task is scheduled >12h in advance. High-resolution FortyGuard satellite thermal forecast unlocks at T-12h.");
+            sb.append("Task is scheduled >24h in advance. High-resolution FortyGuard satellite thermal forecast unlocks at T-24h.");
         } else {
             double baseScore = baselineTaskRisk.getRiskScore();
             double propScore = proposedTaskRisk.getRiskScore();

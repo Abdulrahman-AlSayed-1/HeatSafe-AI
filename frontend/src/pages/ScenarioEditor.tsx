@@ -226,7 +226,7 @@ export default function ScenarioEditor() {
   const handleApplyToTask = async () => {
     if (!worksiteId || !selectedTaskId || !proposedTime) return;
     if (isAwaitingForecast) {
-      toast.error('Changes cannot be committed while task is awaiting FortyGuard satellite forecast (>12h out).');
+      toast.error('Changes cannot be committed while task is awaiting FortyGuard satellite forecast (>24h out).');
       return;
     }
     const wId = parseInt(worksiteId);
@@ -449,13 +449,13 @@ export default function ScenarioEditor() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-sm">Pre-Shift Planning Preview Mode (&gt;12h Shift)</span>
+                    <span className="font-bold text-sm">Pre-Shift Planning Preview Mode (&gt;24h Shift)</span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-200/90 text-amber-900 border border-amber-300">
                       Preview Only • Schedule Changes Locked
                     </span>
                   </div>
                   <p className="text-amber-800/90 mt-1 leading-relaxed">
-                    This shift is scheduled beyond the +12 hour horizon. You can configure work-rest protocols and cooling measures for pre-planning. Live FortyGuard satellite hazard scoring unlocks and changes can be applied once the T-12h satellite forecast window is reached.
+                    This shift is scheduled beyond the +24 hour horizon. You can configure work-rest protocols and cooling measures for pre-planning. Live FortyGuard satellite hazard scoring unlocks and changes can be applied once the T-24h satellite forecast window is reached.
                   </p>
                 </div>
               </div>
@@ -676,11 +676,11 @@ export default function ScenarioEditor() {
                       </div>
                       <div>
                         <h4 className="text-xs font-bold uppercase tracking-wider">FortyGuard Telemetry Status</h4>
-                        <p className="text-sm font-black text-amber-900">Awaiting Satellite Forecast Window (&gt;12h Out)</p>
+                        <p className="text-sm font-black text-amber-900">Awaiting Satellite Forecast Window (&gt;24h Out)</p>
                       </div>
                     </div>
                     <p className="text-xs text-amber-800/90 leading-relaxed pt-1 border-t border-amber-200/60">
-                      This shift is scheduled for <strong>{new Date(selectedTask.startTime).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at {new Date(selectedTask.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</strong>. High-resolution FortyGuard satellite thermal curves and metabolic heat risk indices unlock automatically at <strong>T-12 hours</strong> before shift start.
+                      This shift is scheduled for <strong>{new Date(selectedTask.startTime).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} at {new Date(selectedTask.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</strong>. High-resolution FortyGuard satellite thermal curves and metabolic heat risk indices unlock automatically at <strong>T-24 hours</strong> before shift start.
                     </p>
                   </div>
 
@@ -692,7 +692,7 @@ export default function ScenarioEditor() {
                         <Clock className="w-3 h-3 text-amber-600" />
                         <span>Pre-Shift Staged</span>
                       </div>
-                      <p className="text-[10px] text-slate-500 pt-0.5">Unlocks at T-12h</p>
+                      <p className="text-[10px] text-slate-500 pt-0.5">Unlocks at T-24h</p>
                     </div>
 
                     <div className="p-3 bg-blue-50/70 rounded-xl border border-blue-200 text-center space-y-0.5">
@@ -839,17 +839,17 @@ export default function ScenarioEditor() {
                       type="button"
                       disabled={true}
                       className="w-full py-3.5 px-4 bg-slate-200 text-slate-500 font-bold rounded-xl border border-slate-300 shadow-none cursor-not-allowed flex items-center justify-center gap-2 text-xs sm:text-sm"
-                      title="Mitigation plans can only be committed to live schedule once FortyGuard satellite thermal observations become active (within 12 hours of shift start)."
+                      title="Mitigation plans can only be committed to live schedule once FortyGuard satellite thermal observations become active (within 24 hours of shift start)."
                     >
                       <Lock className="w-4 h-4 text-slate-400" />
-                      <span>Changes Locked — Awaiting Satellite Forecast (T-12h)</span>
+                      <span>Changes Locked — Awaiting Satellite Forecast (T-24h)</span>
                     </button>
 
                     <div className="p-3 bg-amber-50/80 rounded-xl border border-amber-200 text-[11px] text-amber-800 leading-relaxed flex items-start gap-2">
                       <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
                       <div>
                         <span>
-                          Mitigation plan application is disabled for shifts scheduled beyond 12 hours. Live thermal calculations require verified satellite raster telemetry.
+                          Mitigation plan application is disabled for shifts scheduled beyond 24 hours. Live thermal calculations require verified satellite raster telemetry.
                         </span>
                         {selectedTask && (
                           <div className="mt-2">
