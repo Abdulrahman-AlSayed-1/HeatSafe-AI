@@ -44,11 +44,19 @@ public class RecommendationServiceImpl implements RecommendationService {
         try {
             String prompt = buildPrompt(evidence);
 
-            String cleanBase = aiBaseUrl.replaceAll("/v1/?$", "").replaceAll("/+$", "");
-            if (cleanBase.contains("localhost")) {
-                cleanBase = cleanBase.replace("localhost", "127.0.0.1");
+            String url;
+            if (aiBaseUrl.endsWith("/chat/completions")) {
+                url = aiBaseUrl;
+            } else if (aiBaseUrl.contains("generativelanguage.googleapis.com")) {
+                String clean = aiBaseUrl.replaceAll("/+$", "");
+                url = clean.endsWith("/openai") ? clean + "/chat/completions" : clean + "/openai/chat/completions";
+            } else {
+                String cleanBase = aiBaseUrl.replaceAll("/v1/?$", "").replaceAll("/+$", "");
+                if (cleanBase.contains("localhost")) {
+                    cleanBase = cleanBase.replace("localhost", "127.0.0.1");
+                }
+                url = cleanBase + "/v1/chat/completions";
             }
-            String url = cleanBase + "/v1/chat/completions";
             log.info("Generating AI recommendations using model '{}' at URL: {}", aiModel, url);
 
             Map<String, Object> requestPayload = Map.of(
