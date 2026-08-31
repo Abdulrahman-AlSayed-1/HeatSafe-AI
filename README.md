@@ -54,12 +54,44 @@
 - **Live Commit Pipeline**: 1-click application applies simulated mitigation parameters directly to active production schedules, recalculating worksite risk in real time.
 - **Pre-Shift Staging Guard**: Automatically locks schedule commits for shifts scheduled >12h in advance, staging parameters until verified FortyGuard satellite observations unlock at T-12h.
 
-### 4. Enterprise Decision Cockpit & UI System
+### 4. Dual-Engine AI Mitigation System
+- **Google Gemini & OpenAI Compatible**: Seamlessly integrates with Google Gemini (`gemini-2.0-flash`), OpenAI (`gpt-4o-mini`), Groq (`llama-3.3-70b`), or local Ollama for natural-language, OSHA/NIOSH-compliant safety advisories.
+- **Deterministic Physiological Fallback**: Built-in rule-based expert system automatically calculates task-specific schedule shifts, 30m/30m work-rest cycles, and hydration mandates even if remote LLMs are offline or unconfigured.
+
+### 5. Enterprise Decision Cockpit & UI System
 - **Thermal Horizon Radial Gauge**: Sleek 220° radial instrument panel with dynamic severity color mapping, status pills, and localized microclimate metrics.
-- **4-Phase Segmented Diurnal Tracker**: Replaces cluttered timeline bars with discrete, intuitive diurnal shift blocks (Dawn 00-06h, Morning 06-12h, Midday Peak 12-17h, Evening 17-24h).
-- **Dual-Level AI Recommendations**: Site-wide OSHA operational advisories alongside task-tailored mitigations featuring 1-click Simulate in What-If routing.
+- **Distinct Risk Dimensions**: Cleanly separates physical environmental heat (FortyGuard satellite peak temperature) from workforce operational risk (shift exposure and metabolic strain).
+- **4-Phase Segmented Diurnal Tracker**: Intuitive diurnal shift blocks (Dawn 00-06h, Morning 06-12h, Midday Peak 12-17h, Evening 17-24h).
 - **Executive Plan Export**: Client-side high-resolution PDF generation with branded headers, facility metrics, and task rosters.
 - **Full Mobile Responsiveness**: Seamless experience across mobile, tablet, and widescreen industrial displays.
+
+---
+
+## Production Cloud Deployment Architecture
+
+HeatSafe AI is deployed in a modern, decoupled serverless & containerized multi-cloud architecture:
+
+```
+┌───────────────────────────────┐      ┌───────────────────────────────┐
+│     Vercel Edge Platform      │      │     SnapDeploy Container      │
+│  React 18 + TypeScript + Vite │ ───► │  Spring Boot 3.2 (Java 17)    │
+│  (SPA Global CDN Distribution)│      │  (Microclimate & Risk Engine) │
+└───────────────────────────────┘      └──────────────┬────────────────┘
+                                                      │
+                       ┌──────────────────────────────┴──────────────────────────────┐
+                       ▼                                                             ▼
+        ┌─────────────────────────────┐                               ┌─────────────────────────────┐
+        │    Neon Lakebase Postgres   │                               │     FortyGuard tOS API      │
+        │ Serverless Postgres (AWS)   │                               │ High-Res Satellite Rasters  │
+        │ Instant Pooling & Scale-to-0│                               │ Dynamic AOI Microclimates   │
+        └─────────────────────────────┘                               └─────────────────────────────┘
+```
+
+* **Frontend**: Hosted on **Vercel** with client-side routing, automated CI/CD builds, and responsive glassmorphism UI.
+* **Backend**: Docker container built from Eclipse Temurin 17 JRE deployed on **SnapDeploy** / cloud container runner.
+* **Database**: Hosted on **Neon Lakebase Postgres** (`aws-us-east-2`) featuring Flyway automated schema migrations `V1`–`V4`.
+* **AI Provider**: Google AI Studio **Gemini 2.0 Flash** / OpenAI-compatible endpoint.
+* **Satellite Telemetry**: Live **FortyGuard tOS Enterprise API** with TCM thermal rasters.
 
 ---
 
@@ -71,7 +103,7 @@ HeatSafe-AI/
 │   ├── src/main/java/com/heatsafe/
 │   │   ├── adapter/fortyguard/           # Real FortyGuard client, AOI service, DTOs & exceptions
 │   │   ├── api/                          # REST Controllers, DTOs, Mappers, Global Exception Handler
-│   │   ├── config/                       # RestTemplate, Dotenv & Application configuration
+│   │   ├── config/                       # WebCorsConfig, RestTemplate & Application configuration
 │   │   ├── domain/                       # Worksite, Task, HeatRiskAssessment JPA Entities
 │   │   └── service/                      # Risk Engine, Scenario Simulator, Recommendation Services
 │   ├── src/main/resources/
@@ -85,18 +117,13 @@ HeatSafe-AI/
 │   │   ├── components/                   # ThermalHorizonGauge, TaskList, HeatmapViewer, BrandLogo
 │   │   ├── pages/                        # Dashboard, ScenarioEditor, WorksiteSelection, Add/EditTask
 │   │   └── utils/                        # Geographic validation & formatting helpers
+│   ├── vercel.json                       # Vercel SPA rewrite routing rules
 │   ├── package.json
 │   └── vite.config.ts
-├── docker-compose.yml                    # Multi-container orchestration (Backend + Postgres)
 ├── Dockerfile                            # Production backend container build
+├── neon.ts                               # Neon Lakebase Postgres Infrastructure-as-Code
 └── README.md
 ```
-
-### Technology Details:
-- **Backend**: Java 17, Spring Boot 3.2.0, Spring Data JPA, Hibernate, Flyway Migration, RestTemplate.
-- **Frontend**: React 18, TypeScript, Vite 5, Tailwind CSS, Lucide React, Recharts, `html2canvas`, `jspdf`.
-- **Database**: PostgreSQL 15 with spatial coordinates support.
-- **External Satellite Provider**: FortyGuard tOS Enterprise REST API (`analytic_type=tcm`).
 
 ---
 
@@ -108,7 +135,6 @@ HeatSafe-AI/
 | `GET` | `/api/worksites` | List all registered enterprise worksites |
 | `POST` | `/api/worksites` | Register a new worksite with geographic coordinates |
 | `GET` | `/api/worksites/{id}` | Retrieve worksite details and current risk profile |
-| `PUT` | `/api/worksites/{id}` | Update worksite parameters |
 | `DELETE` | `/api/worksites/{id}` | Remove a worksite and cascade delete tasks |
 
 ### 2. Task Management
@@ -146,46 +172,23 @@ HeatSafe-AI/
 ### Prerequisites
 - **Java 17+** & **Maven 3.9+**
 - **Node.js 18+** & **npm 9+**
-- **PostgreSQL 15+** (or Docker)
+- **Neon PostgreSQL** or local PostgreSQL 15+
 - **FortyGuard API Key**
 
 ---
 
-### Option A: Running with Docker Compose
+### Option A: Local Development Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Abdulrahman-AlSayed-1/HeatSafe-AI.git
-   cd HeatSafe-AI
-   ```
-
-2. **Configure environment variables:**
-   ```bash
-   cp .env.example .env
-   # Add your FORTYGUARD_API_KEY in .env
-   ```
-
-3. **Launch all services:**
-   ```bash
-   docker-compose up -d
-   ```
-
-4. **Access the application:**
-   - **Frontend UI**: `http://localhost:5173` (or `http://localhost:3000`)
-   - **Backend REST API**: `http://localhost:8080`
-   - **Actuator Health**: `http://localhost:8080/actuator/health`
-
----
-
-### Option B: Local Development Setup
-
-#### 1. Start PostgreSQL
-```bash
-docker run --name heatsafe-postgres \
-  -e POSTGRES_DB=heatsafe \
-  -e POSTGRES_USER=heatsafe \
-  -e POSTGRES_PASSWORD=heatsafe \
-  -p 5432:5432 -d postgres:15-alpine
+#### 1. Configure Environment Variables
+In `backend/.env`:
+```properties
+DATABASE_URL=jdbc:postgresql://<neon-host>:5432/neondb?sslmode=require
+DATABASE_USERNAME=neondb_owner
+DATABASE_PASSWORD=<your-password>
+FORTYGUARD_API_KEY=<your-fortyguard-key>
+AI_ENDPOINT=https://generativelanguage.googleapis.com/v1beta/openai/chat/completions
+OPENAI_API_KEY=<your-gemini-key>
+AI_MODEL=gemini-2.0-flash
 ```
 
 #### 2. Start the Backend (Spring Boot)
@@ -194,9 +197,9 @@ cd backend
 mvn clean package -DskipTests
 java -jar target/heatsafe-ai-1.0.0.jar
 ```
-*The backend runs on `http://localhost:8080` and automatically runs Flyway migrations `V1` through `V4`.*
+*The backend boots on `http://localhost:8080` and applies Flyway migrations `V1`–`V4` automatically.*
 
-#### 3. Start the Frontend (Vite + React)
+#### 3. Start the Frontend (React + Vite)
 ```bash
 cd frontend
 npm install
@@ -206,17 +209,20 @@ npm run dev
 
 ---
 
-## Environment Configuration
+## Environment Configuration Variables
 
-| Variable | Description | Default / Example | Required |
+| Variable | Description | Example / Default | Required |
 |---|---|---|:---:|
-| `FORTYGUARD_API_KEY` | FortyGuard tOS Enterprise API Key | `fg_live_...` | Yes |
+| `DATABASE_URL` | Neon Postgres JDBC Connection String | `jdbc:postgresql://ep-....aws.neon.tech:5432/neondb?sslmode=require` | Yes |
+| `DATABASE_USERNAME` | Neon Postgres User | `neondb_owner` | Yes |
+| `DATABASE_PASSWORD` | Neon Postgres Password | `npg_...` | Yes |
+| `FORTYGUARD_API_KEY` | FortyGuard tOS Enterprise API Key | `fea25af1...` | Yes |
 | `FORTYGUARD_BASE_URL` | FortyGuard API Base URL | `https://api.fortyguard.com` | No |
-| `DATABASE_URL` | PostgreSQL JDBC Connection String | `jdbc:postgresql://localhost:5432/heatsafe` | No |
-| `DATABASE_USERNAME` | PostgreSQL User | `heatsafe` | No |
-| `DATABASE_PASSWORD` | PostgreSQL Password | `heatsafe` | No |
+| `AI_ENDPOINT` | LLM Chat Completions URL | `https://generativelanguage.googleapis.com/v1beta/openai/chat/completions` | No |
+| `OPENAI_API_KEY` | Google Gemini or OpenAI API Key | `AIzaSy...` | No |
+| `AI_MODEL` | AI Model Identifier | `gemini-2.0-flash` / `llama3.1` | No |
 | `SERVER_PORT` | Spring Boot Server Port | `8080` | No |
-| `SPRING_PROFILES_ACTIVE` | Active Spring Profile | `dev` | No |
+| `VITE_API_BASE_URL` | Backend URL for Frontend | `https://heatsafe-ai-a730d.containers.snapdeploy.app` | Yes (in Prod) |
 
 ---
 
