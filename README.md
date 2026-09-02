@@ -9,6 +9,25 @@
 
 **HeatSafe AI** is an operational heat-risk decision-support and mitigation system designed for industrial facilities, open-air construction sites, logistics hubs, and infrastructure projects. By integrating **FortyGuard high-resolution satellite microclimate telemetry (TCM)** with **ISO 7243 physiological heat strain standards** and **OSHA occupational safety protocols**, HeatSafe AI transforms raw thermal rasters into actionable, task-tailored workforce protection schedules.
 
+---
+
+## 🚀 Live Demo & Judge Evaluation Quickstart
+
+| Service | Live Deployment URL | Hosting & Topology | Status |
+| :--- | :--- | :--- | :---: |
+| **Frontend Web App** | [https://heat-safe-ai.vercel.app](https://heat-safe-ai.vercel.app) | Vercel Edge SPA | 🟢 Active |
+| **Backend API** | [https://heatsafe-ai-a730d.containers.snapdeploy.app](https://heatsafe-ai-a730d.containers.snapdeploy.app) | SnapDeploy Container | 🟢 Active |
+| **Health Check** | [https://heatsafe-ai-a730d.containers.snapdeploy.app/health](https://heatsafe-ai-a730d.containers.snapdeploy.app/health) | Spring Boot REST | 🟢 `HTTP 200` |
+| **Database** | Serverless PostgreSQL (`ep-little-forest-...`) | Neon Lakebase Postgres (AWS `us-east-2`) | 🟢 Active |
+| **AI Model** | Google Gemini 2.0 Flash (`gemini-2.0-flash`) | Google AI Studio | 🟢 Active |
+
+> [!IMPORTANT]
+> **⚡ Note for Hackathon Judges on First Visit (Cold-Start Auto-Wake):**
+> * The backend runs on a serverless container environment with automatic scale-to-zero when idle.
+> * If the container has been idle, the very first request initiates a cold-start boot taking **~20–30 seconds**.
+> * **If you experience an initial delay on first visit, please allow 20–30 seconds or open the [Health Check URL](https://heatsafe-ai-a730d.containers.snapdeploy.app/health) once in a browser tab to wake the container up!**
+> * Once awake, all interactive features, live FortyGuard thermal heatmaps, what-if scenario simulations, and Gemini AI mitigations respond with sub-second latency.
+
 ```
        [ FortyGuard tOS API ]                   [ Industrial Worksite ]
       (Satellite TCM Telemetry)                 (Tasks, Crew, Schedules)
@@ -26,7 +45,7 @@
 │     Live Decision Dashboard      │    │     What-If Scenario Engine      │
 │ • Thermal Horizon Radial Gauge   │    │ • 4-Lever Mitigation Simulator   │
 │ • 4-Phase Diurnal Shift Tracker  │    │ • Live Schedule Commit Pipeline  │
-│ • Interactive Thermal Heatmaps   │    │ • Pre-Shift (>12h) Horizon Guard │
+│ • Interactive Thermal Heatmaps   │    │ • Pre-Shift (>24h) Horizon Guard │
 │ • Dual-Level AI Recommendations  │    │ • Executive PDF Plan Export      │
 └──────────────────────────────────┘    └──────────────────────────────────┘
 ```
@@ -52,7 +71,7 @@
   3. **Work-Rest Cycles**: Enforce OSHA / ISO 7243 work-rest rotations (45m/15m, 30m/30m, 15m/45m, or Stoppage).
   4. **Engineering Controls**: Pre-stage cooling stations, active misting fans, evaporative PPE, and hydration monitors.
 - **Live Commit Pipeline**: 1-click application applies simulated mitigation parameters directly to active production schedules, recalculating worksite risk in real time.
-- **Pre-Shift Staging Guard**: Automatically locks schedule commits for shifts scheduled >12h in advance, staging parameters until verified FortyGuard satellite observations unlock at T-12h.
+- **Pre-Shift Staging Guard**: Automatically locks schedule commits for shifts scheduled >24h in advance, staging parameters until verified FortyGuard satellite observations unlock at T-24h.
 
 ### 4. Dual-Engine AI Mitigation System
 - **Google Gemini & OpenAI Compatible**: Seamlessly integrates with Google Gemini (`gemini-2.0-flash`), OpenAI (`gpt-4o-mini`), Groq (`llama-3.3-70b`), or local Ollama for natural-language, OSHA/NIOSH-compliant safety advisories.
