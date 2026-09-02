@@ -516,7 +516,7 @@ export default function Dashboard() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
             <div className="flex items-center gap-3 min-w-0">
               <button
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/worksites')}
                 className="p-2 hover:bg-slate-100 rounded-xl transition-colors border border-slate-200 flex-shrink-0"
                 title="Back to Worksites"
               >

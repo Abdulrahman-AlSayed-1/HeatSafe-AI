@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import Landing from './pages/Landing';
 import WorksiteSelection from './pages/WorksiteSelection';
 import Dashboard from './pages/Dashboard';
 import ScenarioEditor from './pages/ScenarioEditor';
@@ -13,7 +14,9 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Routes>
-          <Route path="/" element={<WorksiteSelection />} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/worksites" element={<WorksiteSelection />} />
+          <Route path="/select-worksite" element={<WorksiteSelection />} />
           <Route path="/dashboard/:worksiteId" element={<Dashboard />} />
           <Route path="/scenario/:worksiteId" element={<ScenarioEditor />} />
           <Route path="/changes-applied/:worksiteId" element={<ChangesApplied />} />

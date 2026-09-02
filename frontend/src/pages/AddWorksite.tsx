@@ -90,7 +90,7 @@ export default function AddWorksite() {
         timezone: formData.timezone,
       });
       toast.success('Worksite created successfully with FortyGuard coverage!');
-      navigate('/');
+      navigate('/worksites');
     } catch (error: any) {
       console.error('Error creating worksite:', error);
       const msg = error.response?.data?.message || 'Failed to create worksite. Please verify coordinates.';
@@ -109,7 +109,7 @@ export default function AddWorksite() {
             <div className="flex items-center gap-4">
               <button
                 type="button"
-                onClick={() => navigate('/')}
+                onClick={() => navigate('/worksites')}
                 className="p-2 hover:bg-slate-100 rounded-xl transition-all border border-slate-200 text-slate-600"
                 title="Back to Worksites"
               >
@@ -344,7 +344,7 @@ export default function AddWorksite() {
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
               type="button"
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/worksites')}
               className="px-6 py-3 rounded-xl border border-slate-200 text-slate-700 font-semibold hover:bg-slate-100 text-sm transition-all"
             >
               Cancel

@@ -188,10 +188,18 @@ export default function WorksiteSelection() {
       <header className="bg-white/85 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 shadow-sm">
         <div className="container mx-auto px-4 py-3.5">
           <div className="flex items-center justify-between gap-4">
-            <BrandLogo size="md" />
+            <BrandLogo size="md" onClick={() => navigate('/')} />
 
             {/* Top Right Actions: Direct Redesigned Add Worksite Button */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+              <button
+                onClick={() => navigate('/')}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all border border-slate-200"
+                title="Return to HeatSafe AI Home"
+              >
+                <span>Home</span>
+              </button>
+
               <button
                 onClick={fetchAllWorksites}
                 disabled={loading}
