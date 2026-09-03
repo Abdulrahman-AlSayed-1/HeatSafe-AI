@@ -114,21 +114,21 @@ export default function BrandLogo({
   return (
     <div
       onClick={onClick}
-      className={`flex items-center gap-3 group ${onClick ? 'cursor-pointer' : ''} ${className}`}
+      className={`flex items-center gap-2.5 sm:gap-3 group flex-shrink-0 whitespace-nowrap ${onClick ? 'cursor-pointer' : ''} ${className}`}
     >
-      <BrandIcon size={size} />
+      <BrandIcon size={size} className="flex-shrink-0" />
 
-      <div>
-        <div className="flex items-center gap-2">
-          <span className={`font-black tracking-tight text-slate-900 ${titleSizes[size]}`}>
+      <div className="flex-shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 whitespace-nowrap">
+          <span className={`font-black tracking-tight text-slate-900 whitespace-nowrap select-none ${titleSizes[size]}`}>
             HeatSafe{' '}
-            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-rose-500 bg-clip-text text-transparent inline-block">
               AI
             </span>
           </span>
 
           {showBadge && (
-            <span className="px-2 py-0.5 text-[10px] font-bold bg-blue-50 text-blue-700 rounded-full border border-blue-200/80 shadow-xs">
+            <span className="hidden sm:inline-flex px-2 py-0.5 text-[10px] font-bold bg-blue-50 text-blue-700 rounded-full border border-blue-200/80 shadow-xs flex-shrink-0">
               Enterprise
             </span>
           )}
